@@ -1,6 +1,7 @@
+import ch03.*
 object Main {
   def main(args: Array[String]): Unit = {
-    println(hello())
+    // chapter 3
+    println(fizzBuzz(30))
   }
-  def hello(): String = "Hello Scala"
 }
