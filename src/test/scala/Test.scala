@@ -75,6 +75,20 @@ object HandsOn extends TestSuite {
         assert(result == 12)
         result
       }
+      test("simplify_(((1 + 1) * y) + ((1 - 1) * x))") {
+        val op = BinOp(
+          BinOp(
+            BinOp(Literal(1), "+", Literal(1)),
+            "*",
+            Variable("y")
+          ),
+          "+",
+          BinOp(BinOp(Literal(1), "-", Literal(1)), "*", Variable("x"))
+        )
+        val result = simplify(op)
+        assert(result == BinOp(Literal(2), "*", Variable("y")))
+        stringify(result)
+      }
     }
   }
 }

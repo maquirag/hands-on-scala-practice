@@ -22,4 +22,33 @@ object ch05 {
     case Literal(value) => value
     case Variable(name) => values(name)
   }
+
+  def simplify(expr: Expr): Expr = {
+    val result = expr match {
+      case BinOp(Literal(0), "*", right) => Literal(0)
+      case BinOp(left, "*", Literal(0))  => Literal(0)
+
+      case BinOp(left, "+", Literal(0))  => simplify(left)
+      case BinOp(Literal(0), "+", right) => simplify(right)
+      case BinOp(left, "-", Literal(0))  => simplify(left)
+
+      case BinOp(Literal(1), "*", right) => simplify(right)
+      case BinOp(left, "*", Literal(1))  => simplify(left)
+
+      case BinOp(Literal(left), "+", Literal(right)) => Literal(left + right)
+      case BinOp(Literal(left), "-", Literal(right)) => Literal(left - right)
+      case BinOp(Literal(left), "*", Literal(right)) => Literal(left * right)
+
+      case BinOp(left, "+", right) =>
+        BinOp(simplify(left), "+", simplify(right))
+      case BinOp(left, "-", right) =>
+        BinOp(simplify(left), "-", simplify(right))
+      case BinOp(left, "*", right) =>
+        BinOp(simplify(left), "*", simplify(right))
+
+      case Literal(value) => Literal(value)
+      case Variable(name) => Variable(name)
+    }
+    if (expr == result) result else simplify(result)
+  }
 }
