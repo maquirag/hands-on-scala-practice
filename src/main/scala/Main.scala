@@ -1,7 +1,11 @@
 import ch03.*
+import ch04.*
+import ch05.*
+
 object Main {
   def main(args: Array[String]): Unit = {
-    check_chapter03
+    //check_chapter03
+    check_chapter05
   }
 
   def check_chapter03 = {
@@ -28,5 +32,22 @@ object Main {
         new Msg(6, Some(5), "Here me moo, moo")
       )
     )
+  }
+
+  def check_chapter05 = {
+    val ex1 = BinOp(Variable("x"), "+", Literal(1))
+    println(stringify(ex1))
+    val ex2 = BinOp(
+      Variable("x"),
+      "*",
+      BinOp(Variable("y"), "-", Literal(1))
+    )
+    println(stringify(ex2))
+    val ex3 = BinOp(
+      BinOp(Variable("x"), "+", Literal(1)),
+      "*",
+      BinOp(Variable("y"), "-", Literal(1))
+    )
+    println(stringify(ex3))
   }
 }
